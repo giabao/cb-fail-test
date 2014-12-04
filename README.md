@@ -1,59 +1,81 @@
+See https://www.couchbase.com/issues/browse/JVMCBC-79
+
 1. update Helper.{connectionString, pw}
 
-2. run SuccessTest => success:
+2. checkout [couchbase-jvm-core](https://github.com/couchbase/couchbase-jvm-core) & run `./gradlew publishToMavenLocal`
+
+3. checkout [couchbase-java-client](https://github.com/couchbase/couchbase-java-client) & run `./gradlew publishToMavenLocal`
+
+4. install [sbt](http://www.scala-sbt.org/0.13/tutorial/Manual-Installation.html)
+
+5. run `sbt test` =>
 
 ```
-Dec 01, 2014 6:48:52 PM com.couchbase.client.core.CouchbaseCore <init>
-INFO: CoreEnvironment: {sslEnabled=false, sslKeystoreFile='null', sslKeystorePassword='null', queryEnabled=false, queryPort=8093, bootstrapHttpEnabled=true, bootstrapCarrierEnabled=true, bootstrapHttpDirectPort=8091, bootstrapHttpSslPort=18091, bootstrapCarrierDirectPort=11210, bootstrapCarrierSslPort=11207, ioPoolSize=4, computationPoolSize=4, responseBufferSize=16384, requestBufferSize=16384, kvServiceEndpoints=1, viewServiceEndpoints=1, queryServiceEndpoints=1, ioPool=NioEventLoopGroup, coreScheduler=CoreScheduler, packageNameAndVersion=couchbase-java-client/2.0.1 (git: 2.0.1)}
-Dec 01, 2014 6:48:52 PM com.couchbase.client.core.node.CouchbaseNode$5 call
+> test
+[info] Updating {file:/C:/oss/cb-fail-test/}cb-fail-test...
+[info] Resolving org.scala-lang#scala-library;2.11.4 ...
+[info] Resolving com.couchbase.client#java-client;2.0.2-SNAPSHOT ...
+ [info] Resolving com.couchbase.client#java-client;2.0.2-SNAPSHOT ...
+ [info] Resolving com.couchbase.client#core-io;1.0.2-SNAPSHOT ...
+ [info] Resolving com.couchbase.client#core-io;1.0.2-SNAPSHOT ...
+ [info] Resolving io.reactivex#rxjava;1.0.2 ...
+ [info] Resolving io.reactivex#rxscala_2.11;0.22.0 ...
+ [info] Resolving org.scalatest#scalatest_2.11;2.2.2 ...
+ [info] Resolving org.scala-lang#scala-reflect;2.11.2 ...
+ [info] Resolving org.scala-lang.modules#scala-xml_2.11;1.0.2 ...
+ [info] Resolving org.scala-lang#scala-compiler;2.11.4 ...
+ [info] Resolving org.scala-lang#scala-reflect;2.11.4 ...
+ [info] Resolving org.scala-lang.modules#scala-parser-combinators_2.11;1.0.2 ...
+ [info] Resolving jline#jline;2.12 ...
+[info] Done updating.
+[info] Compiling 3 Scala sources to C:\oss\cb-fail-test\target\scala-2.11\test-classes...
+Dec 04, 2014 4:23:52 PM com.couchbase.client.core.env.DefaultCoreEnvironment <init>
+WARNING: More than 1 Couchbase Environments found (2), this can have severe impact on performance and stability. Reuse environments!
+Dec 04, 2014 4:23:52 PM com.couchbase.client.core.CouchbaseCore <init>
+INFO: CoreEnvironment: {sslEnabled=false, sslKeystoreFile='null', sslKeystorePassword='null', queryEnabled=false, queryPort=8093, bootstrapHttpEnabled=true, bootstrapCarrierEnabled=true, bootstrapHttpDirectPort=8091, bootstrapHttpSslPort=18091, bootstrapCarrierDirectPort=11210, bootstrapCarrierSslPort=11207, ioPoolSize=4, computationPoolSize=4, responseBufferSize=16384, requestBufferSize=16384, kvServiceEndpoints=1, viewServiceEndpoints=1, queryServiceEndpoints=1, ioPool=NioEventLoopGroup, coreScheduler=CoreScheduler, packageNameAndVersion=couchbase-java-client/2.0.2-SNAPSHOT (git: 2.0.1-13-g4317ebe-dirty)}
+Dec 04, 2014 4:23:52 PM com.couchbase.client.core.CouchbaseCore <init>
+INFO: CoreEnvironment: {sslEnabled=false, sslKeystoreFile='null', sslKeystorePassword='null', queryEnabled=false, queryPort=8093, bootstrapHttpEnabled=true, bootstrapCarrierEnabled=true, bootstrapHttpDirectPort=8091, bootstrapHttpSslPort=18091, bootstrapCarrierDirectPort=11210, bootstrapCarrierSslPort=11207, ioPoolSize=4, computationPoolSize=4, responseBufferSize=16384, requestBufferSize=16384, kvServiceEndpoints=1, viewServiceEndpoints=1, queryServiceEndpoints=1, ioPool=NioEventLoopGroup, coreScheduler=CoreScheduler, packageNameAndVersion=couchbase-java-client/2.0.2-SNAPSHOT (git: 2.0.1-13-g4317ebe-dirty)}
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.node.CouchbaseNode$5 call
 INFO: Connected to Node example.com
-Dec 01, 2014 6:48:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.node.CouchbaseNode$5 call
+INFO: Connected to Node example.com
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
 INFO: Opened bucket acc
-Dec 01, 2014 6:48:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
+INFO: Opened bucket acc
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
 INFO: Opened bucket log
-value_test
-Process finished with exit code 0
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$9 call
+INFO: Closed bucket acc
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.config.DefaultConfigurationProvider$9 call
+INFO: Closed bucket log
+Dec 04, 2014 4:23:53 PM com.couchbase.client.core.node.CouchbaseNode$5 call
+INFO: Disconnected from Node example.com
+[info] SuccessTest:
+[info] CouchbaseAsyncCluster
+[info] - should open an additional bucket while running onNext of a Subscriber of the Observable return by opening first bucket
+Dec 04, 2014 4:23:58 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
+INFO: Opened bucket log
+Dec 04, 2014 4:23:59 PM com.couchbase.client.core.config.DefaultConfigurationProvider$9 call
+INFO: Closed bucket acc
+Dec 04, 2014 4:23:59 PM com.couchbase.client.core.config.DefaultConfigurationProvider$9 call
+INFO: Closed bucket log
+Dec 04, 2014 4:23:59 PM com.couchbase.client.core.node.CouchbaseNode$5 call
+INFO: Disconnected from Node example.com
+[info] FailTest:
+[info] CouchbaseCluster
+[info] - should open an additional bucket while running onNext of a Subscriber of the Observable return by opening first bucket *** FAILED ***
+[info]   The future returned an exception of type: java.util.concurrent.TimeoutException. (FailTest.scala:17)
+[info] Run completed in 9 seconds, 508 milliseconds.
+[info] Total number of tests run: 2
+[info] Suites: completed 2, aborted 0
+[info] Tests: succeeded 1, failed 1, canceled 0, ignored 0, pending 0
+[info] *** 1 TEST FAILED ***
+[error] Failed tests:
+[error]         FailTest
+[error] (test:test) sbt.TestsFailedException: Tests unsuccessful
+[error] Total time: 17 s, completed Dec 4, 2014 4:24:01 PM
 ```
 
-3. run FailTest => fail:
-
-```
-Dec 01, 2014 6:41:10 PM com.couchbase.client.core.CouchbaseCore <init>
-INFO: CoreEnvironment: {sslEnabled=false, sslKeystoreFile='null', sslKeystorePassword='null', queryEnabled=false, queryPort=8093, bootstrapHttpEnabled=true, bootstrapCarrierEnabled=true, bootstrapHttpDirectPort=8091, bootstrapHttpSslPort=18091, bootstrapCarrierDirectPort=11210, bootstrapCarrierSslPort=11207, ioPoolSize=4, computationPoolSize=4, responseBufferSize=16384, requestBufferSize=16384, kvServiceEndpoints=1, viewServiceEndpoints=1, queryServiceEndpoints=1, ioPool=NioEventLoopGroup, coreScheduler=CoreScheduler, packageNameAndVersion=couchbase-java-client/2.0.1 (git: 2.0.1)}
-Dec 01, 2014 6:41:10 PM com.couchbase.client.core.node.CouchbaseNode$5 call
-INFO: Connected to Node example.com
-Dec 01, 2014 6:41:11 PM com.couchbase.client.core.config.DefaultConfigurationProvider$6 call
-INFO: Opened bucket acc
-Exception in thread "main" java.lang.RuntimeException: java.util.concurrent.TimeoutException
-	at rx.observables.BlockingObservable.forEach(BlockingObservable.java:138)
-	at rx.lang.scala.observables.BlockingObservable$.foreach$extension(BlockingObservable.scala:53)
-	at FailTest$.delayedEndpoint$FailTest$1(FailTest.scala:5)
-	at FailTest$delayedInit$body.apply(FailTest.scala:5)
-	at scala.Function0$class.apply$mcV$sp(Function0.scala:40)
-	at scala.runtime.AbstractFunction0.apply$mcV$sp(AbstractFunction0.scala:12)
-	at scala.App$$anonfun$main$1.apply(App.scala:76)
-	at scala.App$$anonfun$main$1.apply(App.scala:76)
-	at scala.collection.immutable.List.foreach(List.scala:381)
-	at scala.collection.generic.TraversableForwarder$class.foreach(TraversableForwarder.scala:35)
-	at scala.App$class.main(App.scala:76)
-	at FailTest$.main(FailTest.scala:5)
-	at FailTest.main(FailTest.scala)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:483)
-	at com.intellij.rt.execution.application.AppMain.main(AppMain.java:134)
-Caused by: java.util.concurrent.TimeoutException
-	at rx.internal.operators.OperatorTimeoutBase$TimeoutSubscriber.onTimeout(OperatorTimeoutBase.java:169)
-	at rx.internal.operators.OperatorTimeout$1$1.call(OperatorTimeout.java:42)
-	at rx.internal.schedulers.ScheduledAction.run(ScheduledAction.java:45)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
-	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
-	at java.lang.Thread.run(Thread.java:745)
-
-Process finished with exit code 1
-```
+### Note
+The previous test is at commit [3f12ac2331](https://github.com/giabao/cb-fail-test/blob/3f12ac2331/README.md)
